@@ -1,1 +1,203 @@
-/* TeacherCard component styles */
+.card {
+  display: flex;
+  gap: 48px;
+  max-width: 1184px;
+  margin: 32px auto 0 auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(18, 20, 23, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatarSection {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ffc531;
+}
+
+.onlineIndicator {
+  position: absolute;
+  top: 19px;
+  right: 19px;
+  width: 12px;
+  height: 12px;
+  background-color: #38a169;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.languageLabel {
+  font-size: 16px;
+  font-weight: 500;
+  color: #8a8a89;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+.stats {
+  display: flex;
+  gap: 32px;
+  font-size: 16px;
+  color: #121417;
+}
+
+.stats span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  color: #38a169;
+  font-weight: 600;
+}
+
+.favoriteBtn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  filter: grayscale(100%);
+}
+
+.favoriteBtn:hover {
+  transform: scale(1.1);
+}
+
+.favoriteBtn.favorited {
+  filter: grayscale(0%);
+}
+
+.teacherName {
+  font-size: 24px;
+  font-weight: 500;
+  color: #121417;
+  margin: 8px 0 16px 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.info p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+  margin: 0;
+}
+
+.info strong {
+  color: #8a8a89;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.readMoreBtn {
+  background: none;
+  border: none;
+  color: #121417;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.readMoreBtn:hover {
+  color: #ffc531;
+}
+
+.bookLessonBtn {
+  background-color: #ffc531;
+  color: #121417;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bookLessonBtn:hover {
+  background-color: #e6b329;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    gap: 24px;
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .avatarSection {
+    align-self: center;
+  }
+
+  .headerRight {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 8px;
+    text-align: right;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bookLessonBtn {
+    align-self: flex-start;
+  }
+}
