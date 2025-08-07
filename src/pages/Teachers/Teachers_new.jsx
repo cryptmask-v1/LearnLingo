@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TeacherCard from "../../components/TeacherCard/TeacherCard";
 import FilterBar from "../../components/FilterBar/FilterBar";
-import DataUpload from "../../components/DataUpload";
 import { teachersService } from "../../services/firebaseServices";
 import styles from "./Teachers.module.css";
 
@@ -105,7 +104,6 @@ const Teachers = () => {
 
   return (
     <div className={styles.teachers}>
-      <DataUpload />
       <FilterBar onFilterChange={handleFilterChange} />
 
       {loading && (

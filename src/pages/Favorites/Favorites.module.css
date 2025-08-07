@@ -1,0 +1,178 @@
+.favorites {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.teacherList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 32px;
+}
+
+.loadMoreSection {
+  display: flex;
+  justify-content: center;
+  margin: 64px 0;
+}
+
+.loadMoreBtn {
+  background-color: #ffc531;
+  color: #121417;
+  border: none;
+  padding: 16px 48px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 232px;
+}
+
+.loadMoreBtn:hover {
+  background-color: #e6b329;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.4);
+}
+
+.loadMoreBtn:active {
+  transform: translateY(0);
+}
+
+/* Empty state styles */
+.notLoggedIn,
+.noFavorites {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 40px 0;
+}
+
+.messageCard {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(18, 20, 23, 0.1);
+  border: 1px solid #f0f0f0;
+}
+
+.messageCard h2 {
+  color: #121417;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.messageCard p {
+  color: rgba(18, 20, 23, 0.7);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 32px 0;
+}
+
+.loginBtn,
+.browseBtn {
+  background-color: #ffc531;
+  color: #121417;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.loginBtn:hover,
+.browseBtn:hover {
+  background-color: #e6b329;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.4);
+}
+
+.loginBtn:active,
+.browseBtn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .favorites {
+    padding: 0 16px;
+  }
+
+  .teacherList {
+    margin-top: 24px;
+  }
+
+  .loadMoreSection {
+    margin: 48px 0;
+  }
+
+  .loadMoreBtn {
+    padding: 14px 32px;
+    font-size: 16px;
+    min-width: 200px;
+  }
+
+  .messageCard {
+    padding: 32px 24px;
+    margin: 0 16px;
+  }
+
+  .messageCard h2 {
+    font-size: 28px;
+  }
+
+  .messageCard p {
+    font-size: 15px;
+  }
+
+  .loginBtn,
+  .browseBtn {
+    padding: 14px 28px;
+    font-size: 16px;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites {
+    padding: 0 12px;
+  }
+
+  .loadMoreBtn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .messageCard {
+    padding: 24px 20px;
+    margin: 0 8px;
+  }
+
+  .messageCard h2 {
+    font-size: 24px;
+  }
+
+  .messageCard p {
+    font-size: 14px;
+  }
+
+  .loginBtn,
+  .browseBtn {
+    width: 100%;
+    max-width: 250px;
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}

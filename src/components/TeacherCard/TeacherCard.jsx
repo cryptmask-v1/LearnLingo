@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFavorites } from "../../context/FavoritesContext";
 import { useAuth } from "../../context/AuthContext";
+import {
+  HiOutlineBookOpen,
+  HiOutlineStar,
+  HiOutlineCurrencyDollar,
+  HiOutlineHeart,
+  HiHeart,
+} from "react-icons/hi2";
+import Modal from "../Modal/Modal";
+import BookingModal from "../BookingModal/BookingModal";
 import styles from "./TeacherCard.module.css";
+import jane from "../../assets/jane.png";
 
 const TeacherCard = ({ teacher }) => {
   const { user } = useAuth();
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  const [showMore, setShowMore] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   // Demo data for development
   const teacherData = teacher || {
@@ -13,18 +25,35 @@ const TeacherCard = ({ teacher }) => {
     name: "Sophia",
     surname: "Anderson",
     languages: ["English", "Spanish"],
-    levels: ["A1 Beginner", "A2 Elementary", "B1 Intermediate"],
+    levels: [
+      "A1 Beginner",
+      "A2 Elementary",
+      "B1 Intermediate",
+      "B2 Upper-Intermediate",
+    ],
     rating: 4.8,
-    reviews: 127,
+    reviews: [
+      {
+        id: 1,
+        reviewer_name: "Frank",
+        reviewer_rating: 4.0,
+        comment: "Sophia's lessons were very helpful. I made good progress.",
+      },
+      {
+        id: 2,
+        reviewer_name: "Eve",
+        reviewer_rating: 5.0,
+        comment: "Sophia is an amazing teacher! She is patient and supportive.",
+      },
+    ],
     price_per_hour: 30,
     lessons_done: 540,
-    avatar_url:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b29c?w=150&h=150&fit=crop&crop=face",
+    avatar_url: jane,
     lesson_info:
       "Experienced English teacher with 5+ years of teaching experience",
     conditions: "I adapt my teaching methods to your individual learning style",
     experience:
-      "5 years of teaching experience with students from around the world",
+      "Sophia is an experienced and dedicated language teacher specializing in English and Spanish. She holds a Bachelor's degree in English Studies and a Master's degree in Spanish Literature. Her passion for languages and teaching has driven her to become a highly proficient and knowledgeable instructor. With over 10 years of teaching experience, Sophia has helped numerous students of various backgrounds and proficiency levels achieve their language learning goals.",
   };
 
   const handleFavoriteClick = () => {
@@ -40,28 +69,49 @@ const TeacherCard = ({ teacher }) => {
     }
   };
 
+  const openBookingModal = () => {
+    if (!user) {
+      alert("Please log in to book a lesson");
+      return;
+    }
+    setIsBookingModalOpen(true);
+  };
+
+  const closeBookingModal = () => {
+    setIsBookingModalOpen(false);
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.avatarSection}>
-        <img
-          src={teacherData.avatar_url}
-          alt={`${teacherData.name} ${teacherData.surname}`}
-          className={styles.avatar}
-        />
-        <div className={styles.onlineIndicator}></div>
+        <div className={styles.avatarWrapper}>
+          <img
+            src={teacherData.avatar_url}
+            alt={`${teacherData.name} ${teacherData.surname}`}
+            className={styles.avatar}
+          />
+          <div className={styles.onlineIndicator}></div>
+        </div>
       </div>
 
-      <div className={styles.details}>
+      <div className={styles.content}>
         <div className={styles.header}>
           <span className={styles.languageLabel}>Languages</span>
-          <div className={styles.headerRight}>
-            <div className={styles.stats}>
-              <span>📚 Lessons done: {teacherData.lessons_done}</span>
-              <span>⭐ Rating: {teacherData.rating}</span>
+          <div className={styles.headerStats}>
+            <div className={styles.statItem}>
+              <HiOutlineBookOpen className={styles.icon} />
+              <span>Lessons done: {teacherData.lessons_done}</span>
+            </div>
+            <div className={styles.statItem}>
+              <HiOutlineStar className={styles.icon} />
+              <span>Rating: {teacherData.rating}</span>
+            </div>
+            <div className={styles.statItem}>
+              <HiOutlineCurrencyDollar className={styles.icon} />
               <span>
-                💰 Price / 1 lesson:{" "}
+                Price / 1 lesson:{" "}
                 <span className={styles.price}>
-                  {teacherData.price_per_hour}$
+                  ${teacherData.price_per_hour}
                 </span>
               </span>
             </div>
@@ -71,32 +121,92 @@ const TeacherCard = ({ teacher }) => {
               }`}
               onClick={handleFavoriteClick}
             >
-              ❤️
+              {isFavorite(teacherData.id) ? <HiHeart /> : <HiOutlineHeart />}
             </button>
           </div>
         </div>
 
-        <h3 className={styles.teacherName}>
+        <h2 className={styles.teacherName}>
           {teacherData.name} {teacherData.surname}
-        </h3>
+        </h2>
 
         <div className={styles.info}>
           <p>
-            <strong>Speaks:</strong> {teacherData.languages.join(", ")}
+            <span className={styles.label}>Speaks:</span>{" "}
+            <span className={styles.languages}>
+              {teacherData.languages.join(", ")}
+            </span>
           </p>
           <p>
-            <strong>Lesson Info:</strong> {teacherData.lesson_info}
+            <span className={styles.label}>Lesson Info:</span>{" "}
+            {teacherData.lesson_info}
           </p>
           <p>
-            <strong>Conditions:</strong> {teacherData.conditions}
+            <span className={styles.label}>Conditions:</span>{" "}
+            {teacherData.conditions}
           </p>
         </div>
 
+        {showMore && (
+          <div className={styles.moreInfo}>
+            <p>{teacherData.experience}</p>
+
+            <div className={styles.reviews}>
+              {teacherData.reviews.map((review) => (
+                <div key={review.id} className={styles.review}>
+                  <div className={styles.reviewHeader}>
+                    <div className={styles.reviewerAvatar}>
+                      {review.reviewer_name.charAt(0)}
+                    </div>
+                    <div className={styles.reviewerInfo}>
+                      <span className={styles.reviewerName}>
+                        {review.reviewer_name}
+                      </span>
+                      <div className={styles.reviewRating}>
+                        <HiOutlineStar className={styles.starIcon} />
+                        <span>{review.reviewer_rating}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className={styles.reviewComment}>{review.comment}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Levels her zaman gösterilsin */}
+        <div className={styles.levels}>
+          {teacherData.levels.map((level, index) => (
+            <span key={index} className={styles.levelTag}>
+              #{level}
+            </span>
+          ))}
+        </div>
+
         <div className={styles.actions}>
-          <button className={styles.readMoreBtn}>Read more</button>
-          <button className={styles.bookLessonBtn}>Book trial lesson</button>
+          <button
+            className={styles.readMoreBtn}
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? "Read less" : "Read more"}
+          </button>
+          {showMore && (
+            <button className={styles.bookLessonBtn} onClick={openBookingModal}>
+              Book trial lesson
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Booking Modal */}
+      <Modal
+        isOpen={isBookingModalOpen}
+        onClose={closeBookingModal}
+        title="Book trial lesson"
+      >
+        <BookingModal teacher={teacherData} onClose={closeBookingModal} />
+      </Modal>
     </div>
   );
 };

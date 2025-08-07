@@ -1,10 +1,16 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Modal from "../Modal/Modal";
+import LoginForm from "../LoginForm/LoginForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -12,6 +18,21 @@ const Header = () => {
     } catch (error) {
       console.error("Logout error:", error);
     }
+  };
+
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+    setIsRegisterModalOpen(false);
+  };
+
+  const openRegisterModal = () => {
+    setIsRegisterModalOpen(true);
+    setIsLoginModalOpen(false);
+  };
+
+  const closeModals = () => {
+    setIsLoginModalOpen(false);
+    setIsRegisterModalOpen(false);
   };
 
   return (
@@ -56,12 +77,36 @@ const Header = () => {
             </div>
           ) : (
             <div className={styles.authGroup}>
-              <button className={styles.loginBtn}>Log in</button>
-              <button className={styles.registerBtn}>Registration</button>
+              <button className={styles.loginBtn} onClick={openLoginModal}>
+                Log in
+              </button>
+              <button
+                className={styles.registerBtn}
+                onClick={openRegisterModal}
+              >
+                Registration
+              </button>
             </div>
           )}
         </div>
       </div>
+
+      {/* Login Modal */}
+      <Modal isOpen={isLoginModalOpen} onClose={closeModals} title="Log In">
+        <LoginForm
+          onClose={closeModals}
+          onSwitchToRegister={openRegisterModal}
+        />
+      </Modal>
+
+      {/* Register Modal */}
+      <Modal
+        isOpen={isRegisterModalOpen}
+        onClose={closeModals}
+        title="Registration"
+      >
+        <RegisterForm onClose={closeModals} onSwitchToLogin={openLoginModal} />
+      </Modal>
     </header>
   );
 };

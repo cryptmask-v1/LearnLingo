@@ -1,0 +1,295 @@
+.bookingModal {
+  width: 100%;
+}
+
+.teacherInfo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.teacherAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.teacherDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bookingText {
+  color: rgba(18, 20, 23, 0.5);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  margin: 0;
+}
+
+.teacherName {
+  color: #121417;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.description {
+  color: rgba(18, 20, 23, 0.8);
+  font-size: 16px;
+  line-height: 1.375;
+  margin: 0 0 40px 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.label {
+  display: block;
+  color: #121417;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.375;
+  margin-bottom: 16px;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  color: #121417;
+  font-size: 16px;
+  line-height: 1.375;
+  padding: 4px 0;
+}
+
+.radioInput {
+  display: none;
+}
+
+.radioCustom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(18, 20, 23, 0.2);
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.radioInput:checked + .radioCustom {
+  border-color: #ffc531;
+}
+
+.radioInput:checked + .radioCustom::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #ffc531;
+  border-radius: 50%;
+}
+
+.radioLabel:hover .radioCustom {
+  border-color: #ffc531;
+}
+
+.input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 1.375;
+  color: #121417;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #121417;
+  font-weight: 400;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #ffc531;
+  box-shadow: 0 0 0 2px rgba(255, 197, 49, 0.2);
+}
+
+.inputError {
+  border-color: #e74c3c;
+}
+
+.inputError:focus {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+.errorMessage {
+  display: block;
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 6px;
+  line-height: 1.2;
+}
+
+.generalError {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #dc2626;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.submitBtn {
+  background-color: #ffc531;
+  color: #121417;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 22px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #e6b329;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.4);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teacherInfo {
+    margin-bottom: 32px;
+  }
+
+  .description {
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  .form {
+    gap: 16px;
+  }
+
+  .label {
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .radioLabel {
+    font-size: 15px;
+  }
+
+  .input {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .submitBtn {
+    padding: 14px;
+    font-size: 16px;
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .teacherInfo {
+    margin-bottom: 28px;
+  }
+
+  .teacherAvatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .bookingText {
+    font-size: 11px;
+  }
+
+  .teacherName {
+    font-size: 15px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .form {
+    gap: 14px;
+  }
+
+  .label {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .radioGroup {
+    gap: 10px;
+  }
+
+  .radioLabel {
+    font-size: 14px;
+  }
+
+  .radioCustom {
+    width: 18px;
+    height: 18px;
+  }
+
+  .radioInput:checked + .radioCustom::after {
+    width: 8px;
+    height: 8px;
+  }
+
+  .input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .submitBtn {
+    padding: 12px;
+    font-size: 15px;
+    margin-top: 16px;
+  }
+}
