@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import { bookingsService } from "../../services/firebaseServices";
 import styles from "./BookingModal.module.css";
@@ -66,7 +67,7 @@ const BookingModal = ({ teacher, onClose }) => {
 
       await bookingsService.createBooking(bookingData);
 
-      alert(
+      toast.success(
         `Trial lesson booked with ${teacher.name} ${teacher.surname}! We'll contact you soon.`
       );
       onClose();

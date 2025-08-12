@@ -80,7 +80,19 @@ const Teachers = () => {
       filtered = filtered.filter((teacher) => {
         const price = teacher.price_per_hour;
         const targetPrice = parseInt(filters.price);
-        return price === targetPrice;
+
+        switch (targetPrice) {
+          case 10:
+            return price >= 10 && price < 20;
+          case 20:
+            return price >= 20 && price < 30;
+          case 30:
+            return price >= 30 && price < 40;
+          case 40:
+            return price >= 40;
+          default:
+            return true;
+        }
       });
     }
 
@@ -126,9 +138,15 @@ const Teachers = () => {
             </div>
           )}
 
-          {filteredTeachers.length === 0 && (
+          {filteredTeachers.length === 0 && !loading && (
             <div className={styles.noResults}>
-              <p>No teachers found matching your criteria.</p>
+              <div className={styles.noResultsCard}>
+                <h3>No teachers found</h3>
+                <p>
+                  No teachers match your current filter criteria. Try adjusting
+                  your filters to find more teachers.
+                </p>
+              </div>
             </div>
           )}
         </>

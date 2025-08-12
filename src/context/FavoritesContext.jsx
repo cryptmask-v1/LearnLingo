@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
 import { favoritesService } from "../services/firebaseServices";
 
@@ -75,6 +76,7 @@ export const FavoritesProvider = ({ children }) => {
           `favorites_${user.uid}`,
           JSON.stringify(newFavorites)
         );
+        toast.warning("Added to favorites (offline mode)");
       }
     }
   };
@@ -100,6 +102,7 @@ export const FavoritesProvider = ({ children }) => {
         `favorites_${user.uid}`,
         JSON.stringify(newFavorites)
       );
+      toast.warning("Removed from favorites (offline mode)");
     }
   };
 

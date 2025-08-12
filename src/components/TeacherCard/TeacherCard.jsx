@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { useFavorites } from "../../context/FavoritesContext";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -58,25 +59,27 @@ const TeacherCard = ({ teacher }) => {
 
   const handleFavoriteClick = async () => {
     if (!user) {
-      alert("Please log in to add favorites");
+      toast.warn("Please log in to add favorites");
       return;
     }
 
     try {
       if (isFavorite(teacherData.id)) {
         await removeFromFavorites(teacherData.id);
+        toast.success("Removed from favorites");
       } else {
         await addToFavorites(teacherData.id);
+        toast.success("Added to favorites");
       }
     } catch (error) {
       console.error("Error updating favorites:", error);
-      alert("Failed to update favorites. Please try again.");
+      toast.error("Failed to update favorites. Please try again.");
     }
   };
 
   const openBookingModal = () => {
     if (!user) {
-      alert("Please log in to book a lesson");
+      toast.warn("Please log in to book a lesson");
       return;
     }
     setIsBookingModalOpen(true);

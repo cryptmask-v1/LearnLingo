@@ -38,26 +38,21 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    try {
-      await registerUser(data.email, data.password, data.name);
+
+    const result = await registerUser(data.email, data.password, data.name);
+
+    if (result.success) {
       onClose();
-    } catch (error) {
-      console.error("Registration error:", error);
-      if (error.code === "auth/email-already-in-use") {
-        setError("email", {
-          type: "manual",
-          message:
-            "This email is already registered. Please use a different email or try logging in.",
-        });
-      } else {
-        setError("root", {
-          type: "manual",
-          message: "Registration failed. Please try again.",
-        });
-      }
-    } finally {
-      setIsLoading(false);
+    } else if (result.error === "auth/email-already-in-use") {
+      // Form'da email field'ında göstermek için
+      setError("email", {
+        type: "manual",
+        message: "This email is already registered.",
+      });
     }
+    // Diğer hatalar toast ile gösterildi
+
+    setIsLoading(false);
   };
 
   return (

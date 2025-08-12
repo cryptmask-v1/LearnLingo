@@ -59,6 +59,19 @@
     font-size: 16px;
     min-width: 200px;
   }
+
+  .noResultsCard {
+    padding: 24px 20px;
+    margin: 0 16px;
+  }
+
+  .noResultsCard h3 {
+    font-size: 20px;
+  }
+
+  .noResultsCard p {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -70,17 +83,63 @@
     width: 100%;
     max-width: 280px;
   }
+
+  .noResultsCard {
+    padding: 20px 16px;
+    margin: 0 8px;
+  }
+
+  .noResultsCard h3 {
+    font-size: 18px;
+  }
+
+  .noResultsCard p {
+    font-size: 13px;
+  }
 }
 
 /* Loading and Error States */
 .loading,
-.error,
-.noResults {
+.error {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 300px;
   text-align: center;
+}
+
+/* No results state (when filters don't match) */
+.noResults {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  padding: 40px 0;
+}
+
+.noResultsCard {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  border: 2px dashed #e0e0e0;
+}
+
+.noResultsCard h3 {
+  color: #121417;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.noResultsCard p {
+  color: rgba(18, 20, 23, 0.6);
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .loading p {
@@ -96,11 +155,5 @@
   border: 1px solid #fecaca;
   border-radius: 12px;
   padding: 16px 24px;
-  margin: 0;
-}
-
-.noResults p {
-  color: rgba(18, 20, 23, 0.6);
-  font-size: 16px;
   margin: 0;
 }

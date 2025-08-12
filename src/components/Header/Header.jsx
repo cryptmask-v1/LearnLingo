@@ -15,11 +15,8 @@ const Header = () => {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    await logout();
+    // Toast mesajı AuthContext'te gösterilecek
   };
 
   const openLoginModal = () => {

@@ -27,25 +27,21 @@ const LoginForm = ({ onClose, onSwitchToRegister }) => {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    try {
-      await login(data.email, data.password);
+
+    const result = await login(data.email, data.password);
+
+    if (result.success) {
       onClose();
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("root", {
-        type: "manual",
-        message: "Invalid email or password. Please try again.",
-      });
-    } finally {
-      setIsLoading(false);
     }
+    // Hata durumunda toast mesajı AuthContext'te gösterildi
+
+    setIsLoading(false);
   };
 
   return (
