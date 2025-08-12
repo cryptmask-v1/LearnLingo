@@ -7,7 +7,6 @@ import { useAuth } from "../../context/AuthContext";
 import { bookingsService } from "../../services/firebaseServices";
 import styles from "./BookingModal.module.css";
 
-// Validation schema
 const schema = yup.object({
   reason: yup.string().required("Please select a reason for learning"),
   fullName: yup
@@ -52,7 +51,6 @@ const BookingModal = ({ teacher, onClose }) => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      // Firebase'e booking kaydı yap
       const bookingData = {
         teacherId: teacher.id,
         teacherName: `${teacher.name} ${teacher.surname}`,

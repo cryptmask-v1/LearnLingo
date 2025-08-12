@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HiXMark } from "react-icons/hi2";
 import styles from "./Modal.module.css";
 
 const Modal = ({ isOpen, onClose, children, title }) => {
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscapeKey);
+
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleBackdropClick = (e) => {

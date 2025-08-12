@@ -6,7 +6,6 @@ import { HiEye, HiEyeSlash } from "react-icons/hi2";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./RegisterForm.module.css";
 
-// Validation schema
 const schema = yup.object({
   name: yup
     .string()
@@ -44,13 +43,11 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
     if (result.success) {
       onClose();
     } else if (result.error === "auth/email-already-in-use") {
-      // Form'da email field'ında göstermek için
       setError("email", {
         type: "manual",
         message: "This email is already registered.",
       });
     }
-    // Diğer hatalar toast ile gösterildi
 
     setIsLoading(false);
   };

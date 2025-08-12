@@ -11,7 +11,6 @@ const Teachers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Firebase'den öğretmenleri yükle
   useEffect(() => {
     const loadTeachers = async () => {
       try {
@@ -22,7 +21,7 @@ const Teachers = () => {
       } catch (err) {
         console.error("Error loading teachers:", err);
         setError("Failed to load teachers. Please try again.");
-        // Fallback: demo data kullan
+
         const fallbackTeachers = [
           {
             id: 1,
@@ -58,7 +57,6 @@ const Teachers = () => {
     loadTeachers();
   }, []);
 
-  // Filtreleme fonksiyonu
   const handleFilterChange = (filters) => {
     let filtered = [...allTeachers];
 
@@ -97,7 +95,7 @@ const Teachers = () => {
     }
 
     setFilteredTeachers(filtered);
-    setVisibleTeachers(4); // Reset pagination
+    setVisibleTeachers(4);
   };
 
   const handleLoadMore = () => {

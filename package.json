@@ -1,8 +1,27 @@
 {
   "name": "learnlingo",
-  "private": true,
-  "version": "0.0.0",
+  "description": "A modern, responsive language learning platform that connects students with qualified teachers worldwide",
+  "version": "1.0.0",
+  "private": false,
   "type": "module",
+  "keywords": [
+    "react",
+    "firebase",
+    "education",
+    "language-learning",
+    "teachers",
+    "booking-system"
+  ],
+  "author": "cryptmask-v1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cryptmask-v1/LearnLingo.git"
+  },
+  "homepage": "https://github.com/cryptmask-v1/LearnLingo#readme",
+  "bugs": {
+    "url": "https://github.com/cryptmask-v1/LearnLingo/issues"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

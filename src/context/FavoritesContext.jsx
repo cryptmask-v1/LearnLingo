@@ -18,10 +18,8 @@ export const FavoritesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { user, loading: authLoading } = useAuth();
 
-  // Firebase'den favorileri yükle
   useEffect(() => {
     const loadFavorites = async () => {
-      // Auth loading tamamlanana kadar bekle
       if (authLoading) {
         return;
       }
@@ -35,7 +33,7 @@ export const FavoritesProvider = ({ children }) => {
           setFavorites(userFavorites);
         } catch (error) {
           console.error("Error loading favorites:", error);
-          // Fallback: localStorage'dan yükle
+
           const savedFavorites = localStorage.getItem(`favorites_${user.uid}`);
           if (savedFavorites) {
             const parsed = JSON.parse(savedFavorites);
@@ -55,21 +53,18 @@ export const FavoritesProvider = ({ children }) => {
   const addToFavorites = async (teacherId) => {
     if (!favorites.includes(teacherId)) {
       try {
-        // Firebase'e ekle
         await favoritesService.addToFavorites(user.uid, teacherId);
 
-        // State'i güncelle
         const newFavorites = [...favorites, teacherId];
         setFavorites(newFavorites);
 
-        // Backup olarak localStorage'a kaydet
         localStorage.setItem(
           `favorites_${user.uid}`,
           JSON.stringify(newFavorites)
         );
       } catch (error) {
         console.error("Error adding to favorites:", error);
-        // Sadece localStorage'a kaydet
+
         const newFavorites = [...favorites, teacherId];
         setFavorites(newFavorites);
         localStorage.setItem(
@@ -83,19 +78,18 @@ export const FavoritesProvider = ({ children }) => {
 
   const removeFromFavorites = async (teacherId) => {
     try {
-      // Firebase'den çıkar
       await favoritesService.removeFromFavorites(user.uid, teacherId);
-      // State'i güncelle
+
       const newFavorites = favorites.filter((id) => id !== teacherId);
       setFavorites(newFavorites);
-      // localStorage'ı güncelle
+
       localStorage.setItem(
         `favorites_${user.uid}`,
         JSON.stringify(newFavorites)
       );
     } catch (error) {
       console.error("Error removing from favorites:", error);
-      // Sadece localStorage'dan çıkar
+
       const newFavorites = favorites.filter((id) => id !== teacherId);
       setFavorites(newFavorites);
       localStorage.setItem(
@@ -107,7 +101,6 @@ export const FavoritesProvider = ({ children }) => {
   };
 
   const isFavorite = (teacherId) => {
-    // String ve number karşılaştırması için her ikisini de string'e çevir
     return (
       favorites.includes(String(teacherId)) || favorites.includes(teacherId)
     );

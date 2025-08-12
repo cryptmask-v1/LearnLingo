@@ -20,7 +20,6 @@ const TeacherCard = ({ teacher }) => {
   const [showMore, setShowMore] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
-  // Demo data for development
   const teacherData = teacher || {
     id: 1,
     name: "Sophia",

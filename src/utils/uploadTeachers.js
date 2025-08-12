@@ -2,12 +2,10 @@ import { ref, set } from "firebase/database";
 import { database } from "../services/firebase.js";
 import teachersData from "../db/teachers.json";
 
-// JSON verisini Firebase formatına dönüştür
 const convertToFirebaseFormat = (teachers) => {
   const firebaseData = {};
 
   teachers.forEach((teacher, index) => {
-    // Eksik alanları tamamla ve id ekle
     const teacherId = `teacher_${index + 1}`;
     firebaseData[teacherId] = {
       id: index + 1,
@@ -32,7 +30,6 @@ const convertToFirebaseFormat = (teachers) => {
   return firebaseData;
 };
 
-// Firebase'e veri yükle
 export const uploadTeachersToFirebase = async () => {
   try {
     console.log("Starting data upload to Firebase...");
@@ -54,7 +51,6 @@ export const uploadTeachersToFirebase = async () => {
   }
 };
 
-// Tek öğretmen verisi örneği
 export const uploadSingleTeacher = async (teacherData, teacherId) => {
   try {
     const teacherRef = ref(database, `teachers/${teacherId}`);
@@ -66,7 +62,6 @@ export const uploadSingleTeacher = async (teacherData, teacherId) => {
   }
 };
 
-// Development için test fonksiyonu
 export const testFirebaseConnection = async () => {
   try {
     const testRef = ref(database, "test");

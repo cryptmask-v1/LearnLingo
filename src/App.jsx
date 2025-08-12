@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/toast.css";
 import "./App.css";
 
-// Suppress Firebase console errors globally
 const originalError = console.error;
 console.error = (...args) => {
   const message = args[0]?.toString() || "";
@@ -19,7 +18,7 @@ console.error = (...args) => {
     message.includes("400 (Bad Request)") ||
     message.includes("POST https://identitytoolkit")
   ) {
-    return; // Don't log Firebase auth API errors
+    return;
   }
   originalError.apply(console, args);
 };

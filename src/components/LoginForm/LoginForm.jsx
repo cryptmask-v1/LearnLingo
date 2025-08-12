@@ -6,7 +6,6 @@ import { HiEye, HiEyeSlash } from "react-icons/hi2";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./LoginForm.module.css";
 
-// Validation schema
 const schema = yup.object({
   email: yup
     .string()
@@ -39,7 +38,6 @@ const LoginForm = ({ onClose, onSwitchToRegister }) => {
     if (result.success) {
       onClose();
     }
-    // Hata durumunda toast mesajı AuthContext'te gösterildi
 
     setIsLoading(false);
   };

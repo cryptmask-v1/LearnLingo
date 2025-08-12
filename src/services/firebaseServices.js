@@ -9,9 +9,7 @@ import {
 } from "firebase/database";
 import { database } from "./firebase";
 
-// Teachers Service
 export const teachersService = {
-  // Tüm öğretmenleri getir
   getAllTeachers: async () => {
     try {
       const teachersRef = ref(database, "teachers");
@@ -19,7 +17,7 @@ export const teachersService = {
 
       if (snapshot.exists()) {
         const teachersData = snapshot.val();
-        // Object'i array'e çevir ve id'leri ekle
+
         return Object.keys(teachersData).map((key) => ({
           id: key,
           ...teachersData[key],
@@ -32,7 +30,6 @@ export const teachersService = {
     }
   },
 
-  // Belirli bir öğretmeni getir
   getTeacherById: async (teacherId) => {
     try {
       const teacherRef = ref(database, `teachers/${teacherId}`);
@@ -51,7 +48,6 @@ export const teachersService = {
     }
   },
 
-  // Dile göre öğretmenleri filtrele
   getTeachersByLanguage: async (language) => {
     try {
       const teachersRef = ref(database, "teachers");
@@ -79,7 +75,6 @@ export const teachersService = {
     }
   },
 
-  // Öğretmen ekle (admin için)
   addTeacher: async (teacherData) => {
     try {
       const teachersRef = ref(database, "teachers");
@@ -93,9 +88,7 @@ export const teachersService = {
   },
 };
 
-// Bookings Service
 export const bookingsService = {
-  // Rezervasyon oluştur
   createBooking: async (bookingData) => {
     try {
       const bookingsRef = ref(database, "bookings");
@@ -116,7 +109,6 @@ export const bookingsService = {
     }
   },
 
-  // Kullanıcının rezervasyonlarını getir
   getUserBookings: async (userId) => {
     try {
       const bookingsRef = ref(database, "bookings");
@@ -141,7 +133,6 @@ export const bookingsService = {
     }
   },
 
-  // Öğretmenin rezervasyonlarını getir
   getTeacherBookings: async (teacherId) => {
     try {
       const bookingsRef = ref(database, "bookings");
@@ -167,9 +158,7 @@ export const bookingsService = {
   },
 };
 
-// Favorites Service (Firebase'e kaydedilecek)
 export const favoritesService = {
-  // Kullanıcının favorilerini getir
   getUserFavorites: async (userId) => {
     try {
       const favoritesRef = ref(database, `favorites/${userId}`);
@@ -185,7 +174,6 @@ export const favoritesService = {
     }
   },
 
-  // Favorilere ekle
   addToFavorites: async (userId, teacherId) => {
     try {
       const favoriteRef = ref(database, `favorites/${userId}/${teacherId}`);
@@ -196,7 +184,6 @@ export const favoritesService = {
     }
   },
 
-  // Favorilerden çıkar
   removeFromFavorites: async (userId, teacherId) => {
     try {
       const favoriteRef = ref(database, `favorites/${userId}/${teacherId}`);

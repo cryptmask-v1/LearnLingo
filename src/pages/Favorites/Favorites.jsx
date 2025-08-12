@@ -27,7 +27,6 @@ const Favorites = () => {
     price: "all",
   });
 
-  // Firebase'den tüm öğretmenleri yükle
   useEffect(() => {
     const loadTeachers = async () => {
       try {
@@ -45,12 +44,10 @@ const Favorites = () => {
     loadTeachers();
   }, []);
 
-  // Favori öğretmenleri filtrele
   useEffect(() => {
     if (user && allTeachers.length > 0) {
       if (favorites.length > 0) {
         const favoriteTeachers = allTeachers.filter((teacher) => {
-          // String ve number karşılaştırması için her ikisini de string'e çevir
           const isIncluded =
             favorites.includes(String(teacher.id)) ||
             favorites.includes(teacher.id);
@@ -58,7 +55,6 @@ const Favorites = () => {
         });
         setFilteredTeachers(favoriteTeachers);
       } else {
-        // Favori listesi boşsa filtrelenen öğretmenler de boş olmalı
         setFilteredTeachers([]);
       }
     } else {
@@ -66,17 +62,14 @@ const Favorites = () => {
     }
   }, [user, favorites, allTeachers]);
 
-  // Gösterilen öğretmenleri güncelle
   useEffect(() => {
     setDisplayedTeachers(filteredTeachers.slice(0, teachersToShow));
   }, [filteredTeachers, teachersToShow]);
 
-  // Filtreleri uygulayan yardımcı fonksiyon
   const applyFilters = useCallback(
     (filters) => {
       if (!allTeachers.length) return;
 
-      // Önce tüm favori öğretmenleri al
       let filtered = allTeachers.filter((teacher) => {
         const isIncluded =
           favorites.includes(String(teacher.id)) ||
@@ -84,7 +77,6 @@ const Favorites = () => {
         return isIncluded;
       });
 
-      // Language filtresi
       if (filters.language && filters.language !== "all") {
         filtered = filtered.filter((teacher) =>
           teacher.languages.some((lang) =>
@@ -93,14 +85,12 @@ const Favorites = () => {
         );
       }
 
-      // Level filtresi
       if (filters.level && filters.level !== "all") {
         filtered = filtered.filter((teacher) =>
           teacher.levels.includes(filters.level)
         );
       }
 
-      // Price filtresi - aralık mantığı ile
       if (filters.price && filters.price !== "all") {
         filtered = filtered.filter((teacher) => {
           const price = teacher.price_per_hour;
@@ -122,12 +112,11 @@ const Favorites = () => {
       }
 
       setFilteredTeachers(filtered);
-      setTeachersToShow(4); // Reset to show first 4
+      setTeachersToShow(4);
     },
     [allTeachers, favorites]
   );
 
-  // Favoriler değiştiğinde mevcut filtreleri yeniden uygula
   useEffect(() => {
     if (user && allTeachers.length > 0) {
       applyFilters(currentFilters);
@@ -159,7 +148,6 @@ const Favorites = () => {
     setIsRegisterModalOpen(false);
   };
 
-  // Kullanıcı giriş yapmamışsa
   if (!user) {
     return (
       <div className={styles.favorites}>
@@ -202,7 +190,6 @@ const Favorites = () => {
           </div>
         </div>
 
-        {/* Login Modal */}
         <Modal isOpen={isLoginModalOpen} onClose={closeModals}>
           <LoginForm
             onClose={closeModals}
@@ -210,7 +197,6 @@ const Favorites = () => {
           />
         </Modal>
 
-        {/* Register Modal */}
         <Modal isOpen={isRegisterModalOpen} onClose={closeModals}>
           <RegisterForm
             onClose={closeModals}
@@ -221,7 +207,6 @@ const Favorites = () => {
     );
   }
 
-  // Loading durumu
   if (loading) {
     return (
       <div className={styles.favorites}>
@@ -232,7 +217,6 @@ const Favorites = () => {
     );
   }
 
-  // Error durumu
   if (error) {
     return (
       <div className={styles.favorites}>
@@ -249,7 +233,6 @@ const Favorites = () => {
       <FilterBar onFilterChange={handleFilterChange} />
 
       {filteredTeachers.length === 0 ? (
-        // Hiç favori öğretmen yoksa veya filtre sonucu yoksa
         favorites.length === 0 ? (
           <div className={styles.emptyState}>
             <div className={styles.emptyStateCard}>
@@ -264,7 +247,6 @@ const Favorites = () => {
             </div>
           </div>
         ) : (
-          // Filtre sonucunda öğretmen bulunamadıysa
           <div className={styles.noResults}>
             <div className={styles.noResultsCard}>
               <h3>No teachers found</h3>

@@ -16,7 +16,6 @@ const Header = () => {
 
   const handleLogout = async () => {
     await logout();
-    // Toast mesajı AuthContext'te gösterilecek
   };
 
   const openLoginModal = () => {
