@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { LuLogIn } from "react-icons/lu";
 import Modal from "../Modal/Modal";
 import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
+import ukraineLogo from "../../assets/ukraine.png";
 import styles from "./Header.module.css";
 
 const Header = () => {
@@ -39,6 +41,7 @@ const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <Link to="/" className={styles.logo}>
+          <img src={ukraineLogo} alt="LearnLingo" className={styles.logoIcon} />
           LearnLingo
         </Link>
 
@@ -78,6 +81,7 @@ const Header = () => {
           ) : (
             <div className={styles.authGroup}>
               <button className={styles.loginBtn} onClick={openLoginModal}>
+                <LuLogIn className={styles.loginIcon} />
                 Log in
               </button>
               <button

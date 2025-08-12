@@ -6,13 +6,14 @@
   padding: 24px;
   background: #ffffff;
   border-radius: 24px;
-  box-shadow: 0 0 0 1px rgba(18, 20, 23, 0.2);
+  border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
   min-height: 280px;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #ffc531;
+  box-shadow: 0 4px 20px rgba(255, 197, 49, 0.15);
 }
 
 .avatarSection {
@@ -26,20 +27,21 @@
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ffc531;
+  border: 4px solid #fbe9ba;
+  margin: 12px;
 }
 
 .onlineIndicator {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 19px;
+  right: 19px;
   width: 12px;
   height: 12px;
-  background-color: #38a169;
+  background-color: #9fdf89;
   border: 2px solid #ffffff;
   border-radius: 50%;
 }
@@ -54,7 +56,13 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .languageLabel {
@@ -62,48 +70,92 @@
   font-weight: 500;
   color: #8a8a89;
   line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.teacherName {
+  font-size: 24px;
+  font-weight: 500;
+  color: #121417;
+  margin: 0;
+  line-height: 1.2;
 }
 
 .headerStats {
   display: flex;
   align-items: center;
   gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 4px;
 }
 
 .statItem {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-family);
+  font-weight: 500;
   font-size: 16px;
+  line-height: 150%;
   color: #121417;
-  line-height: 1.5;
+  white-space: nowrap;
+  padding: 0 16px;
+  border-right: 1px solid rgba(18, 20, 23, 0.2);
+}
+
+.statItem:first-child {
+  padding-left: 0;
+}
+
+.statItem:last-of-type {
+  border-right: none;
+  padding-right: 64px;
 }
 
 .icon {
   width: 16px;
   height: 16px;
+  color: #121417;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.starIcon {
+  width: 16px;
+  height: 16px;
   color: #ffc531;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .price {
   color: #38a169;
   font-weight: 500;
+  font-size: 18px;
 }
 
 .favoriteBtn {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   transition: all 0.3s ease;
   color: #121417;
   opacity: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 20px;
 }
 
 .favoriteBtn svg {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
 }
 
 .favoriteBtn:hover {
@@ -116,18 +168,10 @@
   opacity: 1;
 }
 
-.teacherName {
-  font-size: 24px;
-  font-weight: 500;
-  color: #121417;
-  margin: 8px 0 16px 0;
-  line-height: 1.2;
-}
-
 .info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   margin-bottom: 16px;
 }
 
@@ -169,12 +213,25 @@
 .levelTag {
   display: inline-block;
   padding: 8px 12px;
-  background-color: #f8f8f8;
+  background-color: transparent;
   color: #121417;
   border-radius: 35px;
   font-size: 14px;
   font-weight: 500;
   border: 1px solid rgba(18, 20, 23, 0.2);
+  transition: all 0.3s ease;
+}
+
+.levelTag:hover {
+  background-color: #ffc531;
+  border-color: #ffc531;
+}
+
+/* İlk level tag'ı sarı yapalım (A1 Beginner gibi) */
+.levelTag:first-child {
+  background-color: #ffc531;
+  color: #121417;
+  border: 1px solid #ffc531;
 }
 
 .actions {
@@ -202,18 +259,20 @@
   background-color: #ffc531;
   color: #121417;
   border: none;
-  padding: 16px 48px;
+  padding: 14px 32px;
   border-radius: 12px;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: capitalize;
+  min-width: 180px;
 }
 
 .bookLessonBtn:hover {
   background-color: #e6b329;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 197, 49, 0.3);
 }
 
 .moreInfo {
@@ -253,8 +312,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 600;
+  font-size: 18px;
   color: #121417;
   flex-shrink: 0;
 }
@@ -268,7 +327,7 @@
 .reviewerName {
   font-size: 16px;
   font-weight: 500;
-  color: #8a8a89;
+  color: #121417;
 }
 
 .reviewRating {

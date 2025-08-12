@@ -3,7 +3,7 @@ import { useFavorites } from "../../context/FavoritesContext";
 import { useAuth } from "../../context/AuthContext";
 import {
   HiOutlineBookOpen,
-  HiOutlineStar,
+  HiStar,
   HiOutlineCurrencyDollar,
   HiOutlineHeart,
   HiHeart,
@@ -56,16 +56,21 @@ const TeacherCard = ({ teacher }) => {
       "Sophia is an experienced and dedicated language teacher specializing in English and Spanish. She holds a Bachelor's degree in English Studies and a Master's degree in Spanish Literature. Her passion for languages and teaching has driven her to become a highly proficient and knowledgeable instructor. With over 10 years of teaching experience, Sophia has helped numerous students of various backgrounds and proficiency levels achieve their language learning goals.",
   };
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = async () => {
     if (!user) {
       alert("Please log in to add favorites");
       return;
     }
 
-    if (isFavorite(teacherData.id)) {
-      removeFromFavorites(teacherData.id);
-    } else {
-      addToFavorites(teacherData);
+    try {
+      if (isFavorite(teacherData.id)) {
+        await removeFromFavorites(teacherData.id);
+      } else {
+        await addToFavorites(teacherData.id);
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+      alert("Failed to update favorites. Please try again.");
     }
   };
 
@@ -96,20 +101,27 @@ const TeacherCard = ({ teacher }) => {
 
       <div className={styles.content}>
         <div className={styles.header}>
-          <span className={styles.languageLabel}>Languages</span>
+          <div className={styles.leftSection}>
+            <span className={styles.languageLabel}>Languages</span>
+            <h2 className={styles.teacherName}>
+              {teacherData.name} {teacherData.surname}
+            </h2>
+          </div>
           <div className={styles.headerStats}>
             <div className={styles.statItem}>
               <HiOutlineBookOpen className={styles.icon} />
+              <span>Lessons online</span>
+            </div>
+            <div className={styles.statItem}>
               <span>Lessons done: {teacherData.lessons_done}</span>
             </div>
             <div className={styles.statItem}>
-              <HiOutlineStar className={styles.icon} />
+              <HiStar className={styles.starIcon} />
               <span>Rating: {teacherData.rating}</span>
             </div>
             <div className={styles.statItem}>
-              <HiOutlineCurrencyDollar className={styles.icon} />
               <span>
-                Price / 1 lesson:{" "}
+                Price / 1 hour:{" "}
                 <span className={styles.price}>
                   ${teacherData.price_per_hour}
                 </span>
@@ -125,10 +137,6 @@ const TeacherCard = ({ teacher }) => {
             </button>
           </div>
         </div>
-
-        <h2 className={styles.teacherName}>
-          {teacherData.name} {teacherData.surname}
-        </h2>
 
         <div className={styles.info}>
           <p>
@@ -152,8 +160,8 @@ const TeacherCard = ({ teacher }) => {
             <p>{teacherData.experience}</p>
 
             <div className={styles.reviews}>
-              {teacherData.reviews.map((review) => (
-                <div key={review.id} className={styles.review}>
+              {teacherData.reviews.map((review, index) => (
+                <div key={review.id || index} className={styles.review}>
                   <div className={styles.reviewHeader}>
                     <div className={styles.reviewerAvatar}>
                       {review.reviewer_name.charAt(0)}
@@ -163,7 +171,7 @@ const TeacherCard = ({ teacher }) => {
                         {review.reviewer_name}
                       </span>
                       <div className={styles.reviewRating}>
-                        <HiOutlineStar className={styles.starIcon} />
+                        <HiStar className={styles.starIcon} />
                         <span>{review.reviewer_rating}</span>
                       </div>
                     </div>

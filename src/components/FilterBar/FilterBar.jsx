@@ -1,34 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./FilterBar.module.css";
 
-const FilterBar = () => {
+const FilterBar = ({ onFilterChange }) => {
+  const [filters, setFilters] = useState({
+    language: "all",
+    level: "all",
+    price: "all",
+  });
+
+  const handleFilterUpdate = (filterType, value) => {
+    const newFilters = {
+      ...filters,
+      [filterType]: value,
+    };
+    setFilters(newFilters);
+    if (onFilterChange) {
+      onFilterChange(newFilters);
+    }
+  };
+
   return (
     <div className={styles.filterBar}>
       <div className={styles.filterOptions}>
         <div className={`${styles.filterOption} ${styles.filterOptionLang}`}>
           <span>Languages</span>
-          <select>
-            <option value="french">French</option>
-            <option value="english">English</option>
-            <option value="german">German</option>
-            <option value="ukranian">Ukranian</option>
-            <option value="polish">Polish</option>
+          <select
+            value={filters.language}
+            onChange={(e) => handleFilterUpdate("language", e.target.value)}
+          >
+            <option value="all">All Languages</option>
+            <option value="French">French</option>
+            <option value="English">English</option>
+            <option value="German">German</option>
+            <option value="Ukrainian">Ukrainian</option>
+            <option value="Polish">Polish</option>
           </select>
         </div>
 
         <div className={`${styles.filterOption} ${styles.filterOptionLevel}`}>
           <span>Level of knowledge</span>
-          <select>
-            <option value="a1">A1 Beginner</option>
-            <option value="a2">A2 Elementary</option>
-            <option value="b1">B1 Intermediate</option>
-            <option value="b2">B2 Upper-Intermediate</option>
+          <select
+            value={filters.level}
+            onChange={(e) => handleFilterUpdate("level", e.target.value)}
+          >
+            <option value="all">All Levels</option>
+            <option value="A1 Beginner">A1 Beginner</option>
+            <option value="A2 Elementary">A2 Elementary</option>
+            <option value="B1 Intermediate">B1 Intermediate</option>
+            <option value="B2 Upper-Intermediate">B2 Upper-Intermediate</option>
           </select>
         </div>
 
         <div className={`${styles.filterOption} ${styles.filterOptionPrice}`}>
           <span>Price</span>
-          <select>
+          <select
+            value={filters.price}
+            onChange={(e) => handleFilterUpdate("price", e.target.value)}
+          >
+            <option value="all">All Prices</option>
             <option value="10">10 $</option>
             <option value="20">20 $</option>
             <option value="30">30 $</option>

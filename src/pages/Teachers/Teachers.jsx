@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TeacherCard from "../../components/TeacherCard/TeacherCard";
 import FilterBar from "../../components/FilterBar/FilterBar";
-import DataUpload from "../../components/DataUpload";
 import { teachersService } from "../../services/firebaseServices";
 import styles from "./Teachers.module.css";
 
@@ -73,23 +72,15 @@ const Teachers = () => {
 
     if (filters.level && filters.level !== "all") {
       filtered = filtered.filter((teacher) =>
-        teacher.levels.includes(filters.level)
+        teacher.levels.some((level) => level === filters.level)
       );
     }
 
     if (filters.price && filters.price !== "all") {
       filtered = filtered.filter((teacher) => {
         const price = teacher.price_per_hour;
-        switch (filters.price) {
-          case "low":
-            return price <= 20;
-          case "medium":
-            return price > 20 && price <= 30;
-          case "high":
-            return price > 30;
-          default:
-            return true;
-        }
+        const targetPrice = parseInt(filters.price);
+        return price === targetPrice;
       });
     }
 
@@ -105,7 +96,6 @@ const Teachers = () => {
 
   return (
     <div className={styles.teachers}>
-      <DataUpload />
       <FilterBar onFilterChange={handleFilterChange} />
 
       {loading && (

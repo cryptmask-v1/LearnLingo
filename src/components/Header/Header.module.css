@@ -18,10 +18,19 @@
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 20px;
   font-weight: 500;
   color: #121417;
   text-decoration: none;
+}
+
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .nav {
@@ -49,7 +58,7 @@
 
 .authGroup {
   display: flex;
-  gap: 16px;
+  gap: 14px;
 }
 
 .loginBtn {
@@ -61,6 +70,15 @@
   cursor: pointer;
   border-radius: 12px;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loginIcon {
+  width: 20px;
+  height: 20px;
+  color: #ffc531;
 }
 
 .loginBtn:hover {
@@ -69,10 +87,14 @@
 
 .registerBtn {
   background-color: #121417;
-  color: white;
+  color: #fff;
+  width: 166px;
+  height: 48px;
   border: none;
   padding: 14px 39px;
   border-radius: 12px;
+  font-size: 16px;
+  line-height: 125%;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.3s ease;

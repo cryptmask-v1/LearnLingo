@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
+import { favoritesService } from "../services/firebaseServices";
 
 const FavoritesContext = createContext();
 
@@ -13,23 +14,88 @@ export const useFavorites = () => {
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
-  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth();
 
-  // localStorage'dan favorileri yükle
+  // Firebase'den favorileri yükle
   useEffect(() => {
-    if (user) {
-      const savedFavorites = localStorage.getItem(`favorites_${user.uid}`);
-      if (savedFavorites) {
-        setFavorites(JSON.parse(savedFavorites));
+    const loadFavorites = async () => {
+      // Auth loading tamamlanana kadar bekle
+      if (authLoading) {
+        return;
       }
-    } else {
-      setFavorites([]);
-    }
-  }, [user]);
 
-  // Favorileri localStorage'a kaydet
-  const saveFavorites = (newFavorites) => {
-    if (user) {
+      if (user) {
+        try {
+          setLoading(true);
+          const userFavorites = await favoritesService.getUserFavorites(
+            user.uid
+          );
+          setFavorites(userFavorites);
+        } catch (error) {
+          console.error("Error loading favorites:", error);
+          // Fallback: localStorage'dan yükle
+          const savedFavorites = localStorage.getItem(`favorites_${user.uid}`);
+          if (savedFavorites) {
+            const parsed = JSON.parse(savedFavorites);
+            setFavorites(parsed);
+          }
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setFavorites([]);
+      }
+    };
+
+    loadFavorites();
+  }, [user, authLoading]);
+
+  const addToFavorites = async (teacherId) => {
+    if (!favorites.includes(teacherId)) {
+      try {
+        // Firebase'e ekle
+        await favoritesService.addToFavorites(user.uid, teacherId);
+
+        // State'i güncelle
+        const newFavorites = [...favorites, teacherId];
+        setFavorites(newFavorites);
+
+        // Backup olarak localStorage'a kaydet
+        localStorage.setItem(
+          `favorites_${user.uid}`,
+          JSON.stringify(newFavorites)
+        );
+      } catch (error) {
+        console.error("Error adding to favorites:", error);
+        // Sadece localStorage'a kaydet
+        const newFavorites = [...favorites, teacherId];
+        setFavorites(newFavorites);
+        localStorage.setItem(
+          `favorites_${user.uid}`,
+          JSON.stringify(newFavorites)
+        );
+      }
+    }
+  };
+
+  const removeFromFavorites = async (teacherId) => {
+    try {
+      // Firebase'den çıkar
+      await favoritesService.removeFromFavorites(user.uid, teacherId);
+      // State'i güncelle
+      const newFavorites = favorites.filter((id) => id !== teacherId);
+      setFavorites(newFavorites);
+      // localStorage'ı güncelle
+      localStorage.setItem(
+        `favorites_${user.uid}`,
+        JSON.stringify(newFavorites)
+      );
+    } catch (error) {
+      console.error("Error removing from favorites:", error);
+      // Sadece localStorage'dan çıkar
+      const newFavorites = favorites.filter((id) => id !== teacherId);
+      setFavorites(newFavorites);
       localStorage.setItem(
         `favorites_${user.uid}`,
         JSON.stringify(newFavorites)
@@ -37,29 +103,28 @@ export const FavoritesProvider = ({ children }) => {
     }
   };
 
-  const addToFavorites = (teacher) => {
-    const newFavorites = [...favorites, teacher];
-    setFavorites(newFavorites);
-    saveFavorites(newFavorites);
-  };
-
-  const removeFromFavorites = (teacherId) => {
-    const newFavorites = favorites.filter(
-      (teacher) => teacher.id !== teacherId
-    );
-    setFavorites(newFavorites);
-    saveFavorites(newFavorites);
-  };
-
   const isFavorite = (teacherId) => {
-    return favorites.some((teacher) => teacher.id === teacherId);
+    // String ve number karşılaştırması için her ikisini de string'e çevir
+    return (
+      favorites.includes(String(teacherId)) || favorites.includes(teacherId)
+    );
+  };
+
+  const toggleFavorite = async (teacherId) => {
+    if (isFavorite(teacherId)) {
+      await removeFromFavorites(teacherId);
+    } else {
+      await addToFavorites(teacherId);
+    }
   };
 
   const value = {
     favorites,
+    loading,
     addToFavorites,
     removeFromFavorites,
     isFavorite,
+    toggleFavorite,
   };
 
   return (
